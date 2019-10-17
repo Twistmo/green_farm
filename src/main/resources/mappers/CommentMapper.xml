@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="cn.nchu.green_farm.mapper.CommentMapper">
+
+     <!--插入用户数据-->
+     <!--Integer addnew(Comment comment)-->
+     <insert id="addnew" keyProperty="id" useGeneratedKeys="true" parameterType="cn.nchu.green_farm.entity.Comment">
+        INSERT  INTO t_comment (
+            content,
+			product_id, username,
+			created_time,
+        ) VALUES (
+            #{content},
+			#{product_id}, #{username},
+			#{created_time},
+        )
+     </insert>
+
+    <select id="findList" resultType="cn.nchu.green_farm.entity.Comment">
+        SELECT
+            id,content,
+            product_id,
+            username,
+            created_time
+        FROM
+            t_comment
+        ORDER BY
+            id desc
+	</select>
+
+ </mapper>
+

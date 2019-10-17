@@ -192,11 +192,11 @@
 					</div>
 					<div class="col-md-12 ">
 						<div class="col-md-offset-1 col-md-11 saled-content">
-							<textarea class="form-control" rows="4"></textarea>
+							<textarea id="comment_content" class="form-control" rows="4"></textarea>
 						</div>
 						<div class="col-md-11"></div>
 						<div class="col-md-1">
-							<button type="button" class="btn btn-success">发表评论</button>
+							<button type="button" class="btn btn-success" onclick="relase_comment()">发表评论</button>
 						</div>
 					</div>
 				</div>
@@ -207,25 +207,19 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">产品评论</h3>
 				</div>
-				<div class="panel panel-body ">
-					<div class="col-md-12 ">
-						<div class="col-md-1 saled-icon"><img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="style_img"></span></div>
-						<div class="col-md-11 saled-title">鹏弟弟</div>
-					</div>
-					<div class="col-md-12 ">
-						<div class="col-md-offset-1 col-md-11 saled-content">绿色农场销售并发货的商品，由绿色农场提供发票和相应的售后服务。请您放心购买！
-							注：因厂家会在没有任何提前通知的情况下更改产品包装、产地或者一些附件，本司不能确保客户收到的货物与商城图片、产地、附件说明完全一致。只能确保为原厂正货！并且保证与当时市场上同样主流新品一致。若本商城没有及时更新，请大家谅解！</div>
-					</div>
-				</div>
-				<div class="panel panel-body ">
-					<div class="col-md-12 ">
-						<div class="col-md-1 saled-icon"><span class="fa fa-shield"></span></div>
-						<div class="col-md-11 saled-title">鸿哥哥</div>
-					</div>
-					<div class="col-md-12 ">
-						<div class="col-md-offset-1 col-md-11 saled-content">楼上是个傻叉！</div>
+				<div id="show">
+					<div class="panel panel-body ">
+						<div class="col-md-12 ">
+							<div class="col-md-1 saled-icon"><img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="style_img"></span></div>
+							<div class="col-md-11 saled-title">鹏弟弟</div>
+						</div>
+						<div class="col-md-12 ">
+							<div class="col-md-offset-1 col-md-11 saled-content">绿色农场销售并发货的商品，由绿色农场提供发票和相应的售后服务。请您放心购买！
+								注：因厂家会在没有任何提前通知的情况下更改产品包装、产地或者一些附件，本司不能确保客户收到的货物与商城图片、产地、附件说明完全一致。只能确保为原厂正货！并且保证与当时市场上同样主流新品一致。若本商城没有及时更新，请大家谅解！</div>
+						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 		<!--售后信息开始-->
@@ -374,6 +368,44 @@
 		// 当前页面处理的商品id
 		var id;
 
+		var url = "../../comment/list";
+		// 发送ajax请求，并处理请求
+		$.ajax({
+			"url":url,
+			"type":"POST",
+			"data" :{},
+			"dataType":"json",
+			"success":function(json) {
+				if (json.state == 200) {
+					$("#show").empty();
+					var list = json.data;
+					for (var i = 0; i < list.length ; i++) {
+						console.log(list[i].content+"-"+list[i].title);
+						// var html='<div class="col-md-12">' +
+						// 		'<div class="col-md-7 text-row-2"><a href="product.html?id=#{id}">#{title}</a></div>' +
+						// 		'<div class="col-md-2">¥#{price}</div>' +
+						// 		'<div class="col-md-3"><img src="../..#{image}collect.png" width="100%" /></div>' +
+						// 		'</div>';
+						var html='<div class="panel panel-body ">' +
+								'<div class="col-md-12 ">' +
+								'<div class="col-md-1 saled-icon"><img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="style_img"></span></div>' +
+								'<div class="col-md-11 saled-title">鹏弟弟</div>' +
+								'</div>' +
+								'<div class="col-md-12 ">' +
+								'<div class="col-md-offset-1 col-md-11 saled-content">#{comment}</div>' +
+								'</div>' +
+								'</div>'
+						html = html.replace(/#{comment}/g,list[i].comment);
+						$("#show").append(html);
+					}
+				} else {
+					alert(json.message);
+				}
+			},
+			"error":function(xhr,text, errorThrown) {
+				alert("获取评论错误！");
+			}
+		});
 		$(document).ready(function() {
 			// 获取URL中的id
 			id = $.getUrlParam("id");
@@ -382,6 +414,30 @@
 			showGoodsDetails(id);
 		});
 
+		function relase_comment() {
+			var url = "http://localhost:8080/comment/relase";
+			var product_id = id;
+			var content = $("#comment_content").val();// 从上面的输入框取值
+			var data ="product_id=" + product_id + "&content=" + content;
+			console.log("[data] " + data);
+			$.ajax({
+				"url": url,
+				"data": data,
+				"type": "POST",
+				"dataType": "json",
+				"success": function (json) {
+					if (json.state == 200) {
+						alert("评论成功!")
+					} else {
+						// 这里一般情况是不会出现的
+						alert("评论失败!" + json.message);
+					}
+				},
+				"error": function () {
+					alert("评论出现异常！");
+				}
+			});
+		}
 		function showGoodsDetails(id) {
 			var url = "../../product_list/details/" + id;
 			$.ajax({

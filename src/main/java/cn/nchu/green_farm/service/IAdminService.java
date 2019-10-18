@@ -1,7 +1,9 @@
 package cn.nchu.green_farm.service;
 
 import cn.nchu.green_farm.entity.Admin;
+import cn.nchu.green_farm.entity.Business;
 import cn.nchu.green_farm.entity.FarmProduct;
+import cn.nchu.green_farm.entity.User;
 import cn.nchu.green_farm.service.exception.AdminNotFoundException;
 import cn.nchu.green_farm.service.exception.BusinessNotFoundException;
 import cn.nchu.green_farm.service.exception.PasswordNotMatchException;
@@ -49,4 +51,16 @@ public interface IAdminService {
      * @throws BusinessNotFoundException 商家数据不存在异常
      */
     void changeStatusNoPass(Integer id,String modifiedUser)  throws UpdateException, BusinessNotFoundException;
+
+    /**
+     * 查询用户所有的信息
+     * @return 匹配的用户数据
+     */
+    List<User> getByList();
+
+    /**
+     * 查询商家所有数据
+     * @return
+     */
+    List<Business> getBusByList();
 }

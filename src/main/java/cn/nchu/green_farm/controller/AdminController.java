@@ -3,6 +3,7 @@ package cn.nchu.green_farm.controller;
 import cn.nchu.green_farm.entity.Admin;
 import cn.nchu.green_farm.entity.Business;
 import cn.nchu.green_farm.entity.FarmProduct;
+import cn.nchu.green_farm.entity.User;
 import cn.nchu.green_farm.service.IAdminService;
 import cn.nchu.green_farm.util.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,17 @@ public class AdminController extends BaseController {
         adminService.changeStatusNoPass(id, session.getAttribute("adminName").toString());
 //        adminBusService.changeStatusNoPass(id, "admin07");
         return new ResponseResult<>(SUCCESS);
+    }
+
+    @RequestMapping("/user_list") // 用户列表
+    public ResponseResult<List<User>>  handleUserList() {
+        List<User> list = adminService.getByList();
+        return new ResponseResult<>(SUCCESS,list);
+    }
+
+    @RequestMapping("/bus_list") // 用户列表
+    public ResponseResult<List<Business>>  handleBusList() {
+        List<Business> list = adminService.getBusByList();
+        return new ResponseResult<>(SUCCESS,list);
     }
 }

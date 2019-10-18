@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>商家入驻审核-后台管理</title>
+    <title>用户列表-后台管理</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,33 +13,16 @@
 
     <link rel="stylesheet" href="../../layui-v2.5.5/layui/css/layui.css"  media="all">
 </head>
-<!--layui.table图片显示不全，需重新定义CSS  -->
-<!--<style type="text/css">-->
-<!--    .layui-table-body{-->
-<!--        height:auto!important;-->
-<!--        white-space:normal;-->
-<!--    }-->
-<!--</style>-->
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo">绿色农场</div>
-        <!-- 头部区域（可配合layui已有的水平导航） -->
-<!--        <ul class="layui-nav layui-layout-left">-->
-<!--            <li class="layui-nav-item"><a href="">控制台</a></li>-->
-<!--            <li class="layui-nav-item"><a href="">商品管理</a></li>-->
-<!--            <li class="layui-nav-item"><a href="">用户</a></li>-->
-<!--        </ul>-->
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
                     鹏弟弟
                 </a>
-<!--                <dl class="layui-nav-child">-->
-<!--                    <dd><a href="">基本资料</a></dd>-->
-<!--                    <dd><a href="">安全设置</a></dd>-->
-<!--                </dl>-->
             </li>
             <li class="layui-nav-item"><a href="">注销</a></li>
         </ul>
@@ -60,8 +43,8 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;">商家管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="adminBusData.html">商家列表</a></dd>
-                        <dd class="layui-this"><a href="#">入驻申请</a></dd>
+                        <dd class="layui-this"><a href="adminBusData.html">商家列表</a></dd>
+                        <dd><a href="adminSignUp.html">入驻申请</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item layui-nav-itemed">
@@ -118,7 +101,7 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="fail">不通过</a>
 </script>
 <script type="text/html" id="imgtmp">
-    <img src="{{d.license}}">
+    <img src="{{d.image}}1.jpg">
 </script>
 <script src="../../layui-v2.5.5/layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
@@ -129,7 +112,7 @@
         var $ = layui.jquery
         table.render({
             elem: '#test'
-            ,url:'../../admin/bus/list'
+            ,url:'../../admin/bus_list'
             ,parseData: function(res){ //res 即为原始返回的数据
                 if (res.state == 200){
                     var code = 0;
@@ -150,12 +133,10 @@
             ,title: '用户数据表'
             ,cols: [[
                 {fixed:'left',type: 'checkbox'}
-                ,{fixed:'left',field:'id', title:'ID', width:80, sort: true}
-                ,{field:'businessName', title:'管理员账号', width:150}
-                ,{field:'email', title:'邮箱', width:300, edit: 'text'}
-                ,{field:'createdTime', title:'申请时间', width:300}
-                ,{field:'license',title:'资质证明',width:150,templet:"#imgtmp",align:'center'}
-                ,{fixed:'right',title:'操作', toolbar: '#barDemo', width:200,align:'center'}
+                ,{fixed:'left',field:'id', title:'ID', width:120, sort: true}
+                ,{fixed:'left',field:'businessName', title:'商家名', width:120, sort: true}
+                ,{field:'phone', title:'联系方式', width:150}
+                ,{field:'email', title:'邮箱', width:180}
             ]]
             // ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
             //     layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
@@ -191,7 +172,7 @@
         table.on('tool(test)', function(obj){
             var data = obj.data;
             if(obj.event === 'pass'){
-                var url = "../../admin/bus/pass/" + data.id;
+                var url = "../../admin/pass/" + data.id;
                 $.ajax({
                     "url": url,
                     "type": "GET",
@@ -212,7 +193,7 @@
                     }
                 });
             } else if(obj.event === 'fail'){
-                var url = "../../admin/bus/no_pass/" + data.id;
+                var url = "../../admin/no_pass/" + data.id;
                 $.ajax({
                     "url" : url,
                     "type" : "GET",

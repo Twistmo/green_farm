@@ -104,6 +104,11 @@ public class AdminServiceImpl implements IAdminService {
         return findBusByList();
     }
 
+    @Override
+    public List<FarmProduct> getProductByList() {
+        return findProductByList();
+    }
+
     /**
      * 对原始密码和盐值执行MD5加密
      * @param srcPassword 原始密码
@@ -174,5 +179,13 @@ public class AdminServiceImpl implements IAdminService {
      */
     private List<Business> findBusByList() {
         return adminMapper.findBusByList();
+    }
+
+    /**
+     * 查询农产品信息
+     * @return
+     */
+    private List<FarmProduct> findProductByList() {
+        return adminMapper.findProductByList();
     }
 }

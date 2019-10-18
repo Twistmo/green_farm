@@ -63,4 +63,10 @@ public interface IAdminService {
      * @return
      */
     List<Business> getBusByList();
+
+    /**
+     * 查询农产品信息
+     * @return
+     */
+    List<FarmProduct> getProductByList();
 }

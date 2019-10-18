@@ -102,4 +102,14 @@
 		from
 			t_business
 	</select>
+
+	<!--查询用户所有的信息-->
+	<!--List<FarmProduct> findProductByList()-->
+	<select id="findProductByList" resultType="cn.nchu.green_farm.entity.FarmProduct">
+		select
+		 	*
+		from
+			t_farm_product
+	</select>
+
 </mapper>

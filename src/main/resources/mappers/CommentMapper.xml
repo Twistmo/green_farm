@@ -5,15 +5,16 @@
 
      <!--插入用户数据-->
      <!--Integer addnew(Comment comment)-->
-     <insert id="addnew" keyProperty="id" useGeneratedKeys="true" parameterType="cn.nchu.green_farm.entity.Comment">
-        INSERT  INTO t_comment (
+    <insert id="addnew" keyProperty="id" useGeneratedKeys="true" parameterType="cn.nchu.green_farm.entity.Comment">
+        INSERT  INTO t_user (
             content,
-			product_id, username,
-			created_time,
+            product_id ,
+            username,
+            created_time
         ) VALUES (
             #{content},
-			#{product_id}, #{username},
-			#{created_time},
+			#{productId}, #{username},
+			#{createdTime}
         )
      </insert>
 

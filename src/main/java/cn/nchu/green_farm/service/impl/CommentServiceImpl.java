@@ -15,7 +15,7 @@ public class CommentServiceImpl implements ICommentService {
     @Resource
     private CommentMapper commentMapper;
     @Override
-    public void reg(Comment comment) throws InsertException {
+    public void release(Comment comment) throws InsertException {
         Integer rows = commentMapper.addnew(comment);
         if (rows != 1) {
             throw new InsertException("新增评论数据时未知错误!");

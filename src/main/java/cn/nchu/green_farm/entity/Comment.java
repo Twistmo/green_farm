@@ -1,12 +1,17 @@
 package cn.nchu.green_farm.entity;
 
-import cn.nchu.green_farm.controller.BaseController;
+import java.io.Serializable;
+import java.util.Date;
 
-public class Comment extends BaseController {
+public class Comment implements Serializable {
+
+    private static final long serialVersionUID = 2894164431960117519L;
+
     private Integer id;
     private String content;
-    private Integer product_id;
+    private Integer productId;
     private String username;
+    private Date createdTime;
 
     public Integer getId() {
         return id;
@@ -16,20 +21,20 @@ public class Comment extends BaseController {
         this.id = id;
     }
 
-    public String getComment() {
+    public String getContent() {
         return content;
     }
 
-    public void setComment(String comment) {
-        this.content = comment;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public Integer getProduct_id() {
-        return product_id;
+    public Integer getProductId() {
+        return productId;
     }
 
-    public void setProduct_id(Integer product_id) {
-        this.product_id = product_id;
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 
     public String getUsername() {
@@ -40,14 +45,22 @@ public class Comment extends BaseController {
         this.username = username;
     }
 
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
 
     @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
-                ", product_id=" + product_id +
+                ", productId=" + productId +
                 ", username='" + username + '\'' +
+                ", createdTime=" + createdTime +
                 '}';
     }
 }

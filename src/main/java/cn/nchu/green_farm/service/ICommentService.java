@@ -9,7 +9,7 @@ public interface ICommentService {
      * 评论发布
      * @param comment 评论信息
      */
-    void reg(Comment comment);
+    void release(Comment comment);
 
     List<Comment> getList();
 }

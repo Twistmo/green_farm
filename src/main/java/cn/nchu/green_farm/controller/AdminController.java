@@ -68,6 +68,7 @@ public class AdminController extends BaseController {
     }
 
     @RequestMapping("/pro_list") // 用户列表
+
     public ResponseResult<List<FarmProduct>>  handleProList() {
         List<FarmProduct> list = adminService.getProductByList();
         return new ResponseResult<>(SUCCESS,list);

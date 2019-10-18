@@ -42,6 +42,8 @@ public class UserController extends BaseController {
     @Autowired
     private IUserService userService;
 
+    // http:localhost:8080/user/reg.do?username=root&password=1234&salt=1234
+//    @GetMapping("/reg.do")
     @PostMapping("/reg.do")
     public ResponseResult<Void> handleReg(User user) {
         userService.reg(user);

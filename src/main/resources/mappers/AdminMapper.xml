@@ -84,4 +84,22 @@
 		where
 			id=#{id}
 	</select>
+
+	<!--查询用户所有的信息-->
+	<!--User findByList()-->
+	<select id="findByList" resultType="cn.nchu.green_farm.entity.User">
+		select
+		 	*
+		from
+			t_user
+	</select>
+
+	<!--查询用户所有的信息-->
+	<!--Business findBusByList()-->
+	<select id="findBusByList" resultType="cn.nchu.green_farm.entity.Business">
+		select
+		 	*
+		from
+			t_business
+	</select>
 </mapper>

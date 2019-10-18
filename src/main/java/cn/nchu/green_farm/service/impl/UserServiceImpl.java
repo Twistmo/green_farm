@@ -23,10 +23,18 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User reg(User user) throws InsertException, DuplicateKeyException {
+
         // 根据用户名查询用户数据
         User data = findByUsername(user.getUsername());
+        System.err.println("data="+data);
         // 判断数据是否为null
         if (data == null) {
+            if (user.getUsername() == null) {
+                throw new InsertException("注册失败!请填写用户名");
+            }
+            if (user.getPassword() == null) {
+                throw new InsertException("注册失败!请填写密码!");
+            }
             // 是：允许注册
             // 补充需要添加的字段
             // 设置是否删除字段为否

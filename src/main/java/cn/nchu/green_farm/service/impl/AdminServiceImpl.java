@@ -1,7 +1,9 @@
 package cn.nchu.green_farm.service.impl;
 
 import cn.nchu.green_farm.entity.Admin;
+import cn.nchu.green_farm.entity.Business;
 import cn.nchu.green_farm.entity.FarmProduct;
+import cn.nchu.green_farm.entity.User;
 import cn.nchu.green_farm.mapper.AdminMapper;
 import cn.nchu.green_farm.service.IAdminService;
 import cn.nchu.green_farm.service.exception.AdminNotFoundException;
@@ -92,6 +94,16 @@ public class AdminServiceImpl implements IAdminService {
         updateStatusNoPass(id, modifiedUser, new Date());
     }
 
+    @Override
+    public List<User> getByList() {
+        return findByList();
+    }
+
+    @Override
+    public List<Business> getBusByList() {
+        return findBusByList();
+    }
+
     /**
      * 对原始密码和盐值执行MD5加密
      * @param srcPassword 原始密码
@@ -146,5 +158,21 @@ public class AdminServiceImpl implements IAdminService {
         if (rows != 1) {
             throw new UpdateException("更新数据时出现未知错误!");
         }
+    }
+
+    /**
+     * 查询用户所有的信息
+     * @return 匹配的用户数据
+     */
+    private List<User> findByList() {
+        return adminMapper.findByList();
+    }
+
+    /**
+     * 查询商家所有信息
+     * @return  匹配的商家信息
+     */
+    private List<Business> findBusByList() {
+        return adminMapper.findBusByList();
     }
 }

@@ -98,7 +98,10 @@
 	<!--Business findBusByList()-->
 	<select id="findBusByList" resultType="cn.nchu.green_farm.entity.Business">
 		select
-		 	*
+		 	id, business_name businessName, password,
+		salt, avatar,
+		is_delete isDelete
+		,the_status theStatus,phone,email
 		from
 			t_business
 	</select>
@@ -107,7 +110,13 @@
 	<!--List<FarmProduct> findProductByList()-->
 	<select id="findProductByList" resultType="cn.nchu.green_farm.entity.FarmProduct">
 		select
-		 	*
+		 	 id,bid,
+            item_type AS itemType,
+            title,sell_point AS sellPoint,
+            price,num,image,status,
+            priority,
+            created_user AS createdUser,
+            created_time AS createdTime
 		from
 			t_farm_product
 	</select>

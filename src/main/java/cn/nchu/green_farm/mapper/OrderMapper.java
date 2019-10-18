@@ -32,4 +32,10 @@ public interface OrderMapper {
      */
     OrderVO findById(Integer id);
 
+    /**
+     * 根据订单号查询订单数据
+     * @param ono 订单号
+     * @return 匹配的订单数据，如果没有则返回null
+     */
+    Order findByOno(Long ono);
 }

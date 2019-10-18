@@ -173,8 +173,8 @@
 						</div>
 					</div>
 					<div class="pay-bar">
-						<a href="cart.html">返回购物车</a>
-						<span class="pull-right"><input id="btn-submit" type="button" value="在线支付" class="btn btn-primary btn-lg link-pay"/></span>
+						<a href="cart.html">返回购物车</a><!--link-pay-->
+						<span class="pull-right"><input id="btn-submit" type="button" value="在线支付"  href="payment.html?ono=#{ono}" class="btn btn-primary btn-lg "/></span>
 					</div>
 
 				</form>
@@ -261,6 +261,7 @@
 		<!--页脚结束-->
 		<script type="text/javascript">
 			$(document).ready(function() {
+				// var ono;
 				// 1. 加载收货地址列表
 				showAddressList();
 
@@ -304,6 +305,7 @@
 									+'</tr>';
 
 							html = html.replace(/#{id}/g, list[i].id);
+							html = html.replace(/#{ono}/g, list[i].ono);
 							html = html.replace(/#{image}/g, list[i].image);
 							html = html.replace(/#{title}/g, list[i].title);
 							html = html.replace(/#{price}/g, list[i].newPrice);
@@ -362,12 +364,14 @@
 					"type": "POST",
 					"dataType": "json",
 					"success": function(json) {
-						if (json.data == 200) {
+						// alert(json.data.ono);
+						oo = json.data.ono;
+						if (json.state == 200) {
 							alert("创建成功!");
+							location.href = "payment.html?" + oo;
 						} else {
 							alert(json.message);
 						}
-
 					},
 					"error": function() {
 						alert("您登陆的信息已经过期!请重新登录!");

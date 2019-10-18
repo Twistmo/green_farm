@@ -43,4 +43,10 @@ public class OrderController extends BaseController {
         OrderVO data = orderService.getById(id);
         return new ResponseResult<>(SUCCESS, data);
     }
+
+    @GetMapping("/detail/{ono}")
+    public ResponseResult<Order> getByOno(@PathVariable("ono") Long ono) {
+        Order data = orderService.getByOno(ono);
+        return new ResponseResult<>(SUCCESS, data);
+    }
 }

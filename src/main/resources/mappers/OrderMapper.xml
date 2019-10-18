@@ -43,14 +43,14 @@
 	<!-- Integer insertOrder(Order order) -->
 	<insert id="insertOrder" useGeneratedKeys="true" keyProperty="id">
  		INSERT INTO t_order (
- 			uid,
+ 			uid,ono,
  			recv_name,recv_phone,
  			recv_district,recv_address,
  			pay,order_time,status,
  			created_user,created_time,
  			modified_user,modified_time
  		) VALUES (
- 			#{uid},
+ 			#{uid},#{ono},
  			#{recvName},#{recvPhone},
  			#{recvDistrict},#{recvAddress},
  			#{pay},#{orderTime},#{status},
@@ -103,5 +103,24 @@
 			t_order.id=#{id}
  	</select>
 
+	<!--根据订单号查询订单数据-->
+	<!--Order findByOno(Integer ono)-->
+	<select id="findByOno" resultType="cn.nchu.green_farm.entity.Order">
+		select
+			uid,
+			ono,pay,
+			recv_name AS recvName,
+			recv_phone AS recvPhone,
+			recv_district AS recvDistrict,
+			recv_address AS recvAddress,
+			order_time AS orderTime,
+			status,
+			created_time AS createdTime
+		from
+			t_order
+		where
+			ono=#{ono}
+
+	</select>
  </mapper>
 

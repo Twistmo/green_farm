@@ -16,9 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author Choococo
@@ -35,7 +34,6 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     @Transactional
     public Order createOrder(Integer uid, String username,Integer addressId, Integer[] cartIds)  throws InsertException {
-
         // 创建Date对象
         Date now = new Date();
         // 声明pay变量
@@ -68,6 +66,8 @@ public class OrderServiceImpl implements IOrderService {
         Order order = new Order();
         // order属性:uid
         order.setUid(uid);
+        // 设置订单号
+        order.setOno(onoRandom());
         // order属性:pay
         order.setPay(pay);
         // 通过addressService.getById()得到收货地址的数据
@@ -115,6 +115,26 @@ public class OrderServiceImpl implements IOrderService {
         return findById(id);
     }
 
+    @Override
+    public Order getByOno(Long ono) {
+        return findByOno(ono);
+    }
+
+
+
+    /**
+     * 生成订单前缀
+     * @return
+     */
+    private Long onoRandom() {
+        Random random = new Random();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        Date date = new Date();
+        String newDate = simpleDateFormat.format(date);
+        return Long.valueOf(Integer.valueOf(newDate)+"" +random.nextInt(10000)+999);
+
+    }
+
     /**
      * 插入订单数据
      * @param order 订单数据
@@ -147,4 +167,12 @@ public class OrderServiceImpl implements IOrderService {
         return orderMapper.findById(id);
     }
 
+    /**
+     * 根据订单号查询订单数据
+     * @param ono 订单号
+     * @return 匹配的订单数据，如果没有则返回null
+     */
+    private Order findByOno(Long ono) {
+        return orderMapper.findByOno(ono);
+    }
 }

@@ -12,6 +12,7 @@ public class Order extends BaseEntity {
 
     private Integer id;
     private Integer uid;
+    private Long ono;
     private String recvName;
     private String recvPhone;
     private String recvDistrict;
@@ -34,6 +35,14 @@ public class Order extends BaseEntity {
 
     public void setUid(Integer uid) {
         this.uid = uid;
+    }
+
+    public Long getOno() {
+        return ono;
+    }
+
+    public void setOno(Long ono) {
+        this.ono = ono;
     }
 
     public String getRecvName() {
@@ -97,6 +106,7 @@ public class Order extends BaseEntity {
         return "Order{" +
                 "id=" + id +
                 ", uid=" + uid +
+                ", ono=" + ono +
                 ", recvName='" + recvName + '\'' +
                 ", recvPhone='" + recvPhone + '\'' +
                 ", recvDistrict='" + recvDistrict + '\'' +

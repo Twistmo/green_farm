@@ -7,8 +7,7 @@ import cn.nchu.green_farm.mapper.OrderMapper;
 import cn.nchu.green_farm.service.IAddressService;
 import cn.nchu.green_farm.service.ICartService;
 import cn.nchu.green_farm.service.IOrderService;
-import cn.nchu.green_farm.service.exception.AddressNotFoundException;
-import cn.nchu.green_farm.service.exception.InsertException;
+import cn.nchu.green_farm.service.exception.*;
 import cn.nchu.green_farm.vo.CartVO;
 import cn.nchu.green_farm.vo.OrderVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,6 +119,23 @@ public class OrderServiceImpl implements IOrderService {
         return findByOno(ono);
     }
 
+    @Override
+    public void changeStatusPay(Long ono, Integer uid)  throws UpdateException, OrderDataNotFoundException, AccessDefinedException {
+        //  根据订单号查询订单数据
+        Order data = findByOno(ono);
+        // 判断订单数据是否为null
+        if (data == null) {
+            // 是：抛出异常OrderDataNotFoundException
+            throw new OrderDataNotFoundException("支付失败!您尝试修改的订单号不存在!");
+        }
+        // 判断数据归属是否正常
+        if (!data.getUid().equals(uid)) {
+            // 不正常：抛出异常AccessDefinedException
+            throw new AccessDefinedException("支付失败!您您尝试支付的订单号不存在!");
+        }
+        // 执行更新
+        updateStatusPay(ono, new Date());
+    }
 
 
     /**
@@ -174,5 +190,16 @@ public class OrderServiceImpl implements IOrderService {
      */
     private Order findByOno(Long ono) {
         return orderMapper.findByOno(ono);
+    }
+
+    /**
+     * 在支付成功之后，根据订单号，将status该为1，已支付
+     * @param ono 订单号
+     */
+    private void updateStatusPay(Long ono, Date modifiedTime) {
+        Integer rows = orderMapper.updateStatusPay(ono,modifiedTime);
+        if (rows != 1) {
+            throw new UpdateException("更新数据时发生未知错误!更新数据失败!");
+        }
     }
 }

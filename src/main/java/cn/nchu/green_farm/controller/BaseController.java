@@ -47,7 +47,11 @@ public abstract class BaseController {
 			// 405-商家数据不存在
 			state = 405;
 			// return new ResponseResult<>(402, e);
-		} else if (e instanceof InsertException) {
+		} else if (e instanceof OrderDataNotFoundException) {
+			// 406-订单数据不存在
+			state = 500;
+			// return new ResponseResult<>(500, e);
+		}  else if (e instanceof InsertException) {
 			// 500-插入数据异常
 			state = 500;
 			// return new ResponseResult<>(500, e);

@@ -99,7 +99,7 @@
 				 item="id" separator=","
 				 open="(" close=")">
 				#{id}
-			</foreach>
+			</foreach>	/*foreach用于批量处理某些数据的时候，separator表示id之间用逗号隔开*/
 		ORDER BY
 			t_cart.id DESC
 	</select>

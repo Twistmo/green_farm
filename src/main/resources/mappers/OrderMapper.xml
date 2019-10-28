@@ -122,5 +122,17 @@
 			ono=#{ono}
 
 	</select>
+
+	<!--在支付成功之后，将status该为1，已支付-->
+	<!-- Integer updateStatusPay(@Param("ono") Long ono,@Param("modifiedTime") Date modifiedTime)-->
+	<update id="updateStatusPay">
+		update
+			t_order
+		set
+			status=1,
+			modified_time=#{modifiedTime}
+		where
+			ono=#{ono}
+	</update>
  </mapper>
 

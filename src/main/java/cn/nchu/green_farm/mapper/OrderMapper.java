@@ -4,6 +4,9 @@ import cn.nchu.green_farm.entity.Order;
 import cn.nchu.green_farm.entity.OrderItem;
 import cn.nchu.green_farm.vo.OrderVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
 
 /**
  *  订单与订单商品的持久层接口
@@ -38,4 +41,12 @@ public interface OrderMapper {
      * @return 匹配的订单数据，如果没有则返回null
      */
     Order findByOno(Long ono);
+
+    /**
+     * 在支付成功之后，根据订单号，将status该为1，已支付
+     * @param ono 订单号
+     * @param modifiedTime 修改执行时间（订单支付时间）
+     * @return 受影响的行数
+     */
+    Integer updateStatusPay(@Param("ono") Long ono,@Param("modifiedTime") Date modifiedTime);
 }

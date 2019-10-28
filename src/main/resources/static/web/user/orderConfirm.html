@@ -260,7 +260,12 @@
 		</footer>
 		<!--页脚结束-->
 		<script type="text/javascript">
+			// 这个页面用于显示所有收货地址数据
+			// 显示所有前序页面勾选的所有购物车数据
+
 			$(document).ready(function() {
+
+				$("#cart-list").empty();
 				// var ono;
 				// 1. 加载收货地址列表
 				showAddressList();
@@ -289,7 +294,7 @@
 
 						var list = json.data;
 						var selectCount = 0;
-						var selectTotal = 0;
+						var selectTotal = 0.0;
 
 						for (var i = 0; i < list.length; i++) {
 							selectCount += list[i].count;
@@ -310,7 +315,7 @@
 							html = html.replace(/#{title}/g, list[i].title);
 							html = html.replace(/#{price}/g, list[i].newPrice);
 							html = html.replace(/#{count}/g, list[i].count);
-							html = html.replace(/#{totalPrice}/g, parseFloat(list[i].newPrice * list[i].count));
+							html = html.replace(/#{totalPrice}/g, list[i].newPrice * list[i].count);
 
 							$("#cart-list").append(html);
 

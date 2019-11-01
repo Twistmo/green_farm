@@ -173,8 +173,8 @@
 						</div>
 					</div>
 					<div class="pay-bar">
-						<a href="cart.html">返回购物车</a>
-						<span class="pull-right"><input id="btn-submit" type="button" value="在线支付" class="btn btn-primary btn-lg link-pay"/></span>
+						<a href="cart.html">返回购物车</a><!--link-pay-->
+						<span class="pull-right"><input id="btn-submit" type="button" value="在线支付"  href="payment.html?ono=#{ono}" class="btn btn-primary btn-lg "/></span>
 					</div>
 
 				</form>
@@ -260,7 +260,13 @@
 		</footer>
 		<!--页脚结束-->
 		<script type="text/javascript">
+			// 这个页面用于显示所有收货地址数据
+			// 显示所有前序页面勾选的所有购物车数据
+
 			$(document).ready(function() {
+
+				$("#cart-list").empty();
+				// var ono;
 				// 1. 加载收货地址列表
 				showAddressList();
 
@@ -288,7 +294,7 @@
 
 						var list = json.data;
 						var selectCount = 0;
-						var selectTotal = 0;
+						var selectTotal = 0.0;
 
 						for (var i = 0; i < list.length; i++) {
 							selectCount += list[i].count;
@@ -304,11 +310,12 @@
 									+'</tr>';
 
 							html = html.replace(/#{id}/g, list[i].id);
+							html = html.replace(/#{ono}/g, list[i].ono);
 							html = html.replace(/#{image}/g, list[i].image);
 							html = html.replace(/#{title}/g, list[i].title);
 							html = html.replace(/#{price}/g, list[i].newPrice);
 							html = html.replace(/#{count}/g, list[i].count);
-							html = html.replace(/#{totalPrice}/g, parseFloat(list[i].newPrice * list[i].count));
+							html = html.replace(/#{totalPrice}/g, list[i].newPrice * list[i].count);
 
 							$("#cart-list").append(html);
 
@@ -362,12 +369,14 @@
 					"type": "POST",
 					"dataType": "json",
 					"success": function(json) {
-						if (json.data == 200) {
+						// alert(json.data.ono);
+						oo = json.data.ono;
+						if (json.state == 200) {
 							alert("创建成功!");
+							location.href = "payment.html?" + oo;
 						} else {
 							alert(json.message);
 						}
-
 					},
 					"error": function() {
 						alert("您登陆的信息已经过期!请重新登录!");

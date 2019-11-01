@@ -173,7 +173,8 @@
 				"type": "POST",
 				"dataType": "json",
 				"success": function (json) {
-					if (json.state = 200) {
+					// alert(json.state);
+					if (json.state == 200) {
 						alert("注册成功!");
 						location.href = "login.html";
 					} else {

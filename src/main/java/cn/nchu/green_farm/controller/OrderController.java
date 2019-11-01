@@ -43,4 +43,21 @@ public class OrderController extends BaseController {
         OrderVO data = orderService.getById(id);
         return new ResponseResult<>(SUCCESS, data);
     }
+
+    @GetMapping("/detail/{ono}")
+    public ResponseResult<Order> getByOno(@PathVariable("ono") Long ono) {
+        Order data = orderService.getByOno(ono);
+        return new ResponseResult<>(SUCCESS, data);
+    }
+
+    // 按理说使用PostMapping时，是让表单中提交的数据不可见时，用
+    // GetMapping是可见的数据，@PathVariable 当用户需要在地址栏中将值传到另一个界面中使用
+    // RequestParam 是当控制器层需要提交的参数过多的时候，用
+    // http://localhost:8080/order/status?ono=201910181393999
+//    @GetMapping("/status")
+    @PostMapping("/status") // 将已经支付成功的订单数据设置为1，用于订单显示
+    public ResponseResult<Void> changeStatusOfPay(HttpSession session,@RequestParam("ono") Long ono) {
+        orderService.changeStatusPay(ono, getUidFromSession(session));
+        return new ResponseResult<>(SUCCESS);
+    }
 }

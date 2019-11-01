@@ -16,6 +16,8 @@
             created_time AS createdTime
         FROM
             t_farm_product
+        where
+            status=1
         ORDER BY
             priority desc
         limit

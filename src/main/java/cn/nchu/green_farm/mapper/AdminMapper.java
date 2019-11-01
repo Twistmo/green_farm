@@ -3,6 +3,7 @@ package cn.nchu.green_farm.mapper;
 import cn.nchu.green_farm.entity.Admin;
 import cn.nchu.green_farm.entity.Business;
 import cn.nchu.green_farm.entity.FarmProduct;
+import cn.nchu.green_farm.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -37,4 +38,23 @@ public interface AdminMapper {
     Integer updateStatusPass(Integer id, String modifiedUser, Date modifiedTime);
 
     Integer updateStatusNoPass(Integer id, String modifiedUser, Date modifiedTime);
+
+    /**
+     * 查询用户所有的信息
+     * @return 匹配的用户数据
+     */
+    List<User> findByList();
+
+    /**
+     * 查询商家所有信息
+     * @return  匹配的商家信息
+     */
+    List<Business> findBusByList();
+
+    /**
+     * 查询农产品信息
+     * @return
+     */
+    List<FarmProduct> findProductByList();
+
 }

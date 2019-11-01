@@ -53,4 +53,11 @@ public class OrderMapperTestCase {
         System.err.println("orderVO" + orderVO);
     }
 
+    @Test
+    public void updateStatusPay() {
+        Long ono = 201910187790999L;
+        Integer rows = orderMapper.updateStatusPay(ono,new Date());
+        System.err.println("rows=" + rows);
+    }
+
 }

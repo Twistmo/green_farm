@@ -120,7 +120,7 @@
 						<label for="name">
 							<h4>支付结果：</h4></label>
 
-						<div>订单号：1101000301，支付金额¥198，收款方软库绿色农场</div>
+						<div>订单号：<span id="out_trade_no">1101000301</span>，支付金额¥<span id="total_amount">198</span>，收款方软库绿色农场</div>
 						<hr/>
 
 						<div class="text-center pay-res">
@@ -128,7 +128,7 @@
 
 						</div>
 						<div class="text-center">
-							达内学子商城不会以系统异常、订单升级为由，要求你点击任何链接进行退款操作
+							绿色农场不会以系统异常、订单升级为由，要求你点击任何链接进行退款操作
 						</div>
 
 						<div class="pay-bar">
@@ -218,6 +218,92 @@
 
 		</footer>
 		<!--页脚结束-->
+		<script type="text/javascript">
+
+			$(document).ready(function () {
+				var ono = location.search.substring(1).split("&")[1].split("=")[1];
+				// 支付金额
+				var total_amount = location.search.substring(1).split("&")[3].split("=")[1];
+				var url = "../../order/status";
+				var data = "ono="+ ono;
+				// 支付成功操作
+				$.ajax({
+					"url" : url,
+					"data" : data,
+					"type" : "POST",
+					"dataType" : "json",
+					"success" :function (json) {
+						if (json.state == 200) {
+							console.log("修改status成功!");
+						}
+					}
+				});
+				// 订单号
+				// var ono = location.search.substring(1).split("&")[1].split("=")[1];
+				// // 支付金额
+				// var total_amount = location.search.substring(1).split("&")[3].split("=")[1];
+				$("#out_trade_no").html(ono);
+				$("#total_amount").html(total_amount);
+
+			});
+			// 首先需要获取到支付宝返回界面中的路径中的订单号
+            // 从地址栏中获取订单号
+            // 将订单号放在ajax的请求数据中
+            // 同时，将页面中的数据改成从
+			// 订单号
+			// var ono = location.search.substring(1).split("&")[1].split("=")[1];
+			// // 支付金额
+			// var total_amount = location.search.substring(1).split("&")[3].split("=")[1];
+			// $("#out_trade_no").html(ono);
+			// $("#total_amount").html(total_amount);
+		</script>
+		<!--http://localhost:8080/web/user/paySuccess.html?charset=utf-8&out_trade_no=201910184795999&method=alipay.trade.page.pay.return&total_amount=16.50&sign=eBk6zr7t3S4K%2FgxxD1JLRdDli2nHtsEcn2AdDpxwvuu%2BGFnRvIWMTOWAPnlYT1nfBBpH063nx5D9DZUxOQp3MLId8Bliq8AVuB3ya6RodQeipc2WX7C8XwX48AGTyJD121zEzbPL%2FnxoK3fM3lnRd9j97d6Zzx%2FLY8q%2FKPz%2BE1SDhBUmB4d1iSV3Uvh9OlXTCpKdFfA0IZkEUfukH1d8sCbXZn4woqSgKnyH3lhTDMNL0voVYvr4hyLPsyj6oe%2BFzVJkCQujeILFR%2BMlDDeWMeeCKUeOjsLsvBGNqVUuNcffTpJJeoLm6k%2FeZaVyw%2Fkn6QozFbClw4i5aUQkOTEN1A%3D%3D&trade_no=2019101822001402361000103419&auth_app_id=2016091400508294&version=1.0&app_id=2016091400508294&sign_type=RSA2&seller_id=2088102175572406&timestamp=2019-10-18+00%3A27%3A45
+		var array;
+		undefined
+		var data = location.search.substring(1);
+		undefined
+		data.split("&");
+		(12) […]
+		​
+		0: "charset=utf-8"
+		​
+		1: "out_trade_no=201910184795999"
+		​
+		2: "method=alipay.trade.page.pay.return"
+		​
+		3: "total_amount=16.50"
+		​
+		4: "sign=eBk6zr7t3S4K%2FgxxD1JLRdDli2nHtsEcn2AdDpxwvuu%2BGFnRvIWMTOWAPnlYT1nfBBpH063nx5D9DZUxOQp3MLId8Bliq8AVuB3ya6RodQeipc2WX7C8XwX48AGTyJD121zEzbPL%2FnxoK3fM3lnRd9j97d6Zzx%2FLY8q%2FKPz%2BE1SDhBUmB4d1iSV3Uvh9OlXTCpKdFfA0IZkEUfukH1d8sCbXZn4woqSgKnyH3lhTDMNL0voVYvr4hyLPsyj6oe%2BFzVJkCQujeILFR%2BMlDDeWMeeCKUeOjsLsvBGNqVUuNcffTpJJeoLm6k%2FeZaVyw%2Fkn6QozFbClw4i5aUQkOTEN1A%3D%3D"
+		​
+		5: "trade_no=2019101822001402361000103419"
+		​
+		6: "auth_app_id=2016091400508294"
+		​
+		7: "version=1.0"
+		​
+		8: "app_id=2016091400508294"
+		​
+		9: "sign_type=RSA2"
+		​
+		10: "seller_id=2088102175572406"
+		​
+		11: "timestamp=2019-10-18+00%3A27%3A45"
+		​
+		length: 12
+		​
+		<prototype>: Array []
+
+			array=data.split("&");
+			Array(12) [ "charset=utf-8", "out_trade_no=201910184795999", "method=alipay.trade.page.pay.return", "total_amount=16.50", "sign=eBk6zr7t3S4K%2FgxxD1JLRdDli2nHtsEcn2AdDpxwvuu%2BGFnRvIWMTOWAPnlYT1nfBBpH063nx5D9DZUxOQp3MLId8Bliq8AVuB3ya6RodQeipc2WX7C8XwX48AGTyJD121zEzbPL%2FnxoK3fM3lnRd9j97d6Zzx%2FLY8q%2FKPz%2BE1SDhBUmB4d1iSV3Uvh9OlXTCpKdFfA0IZkEUfukH1d8sCbXZn4woqSgKnyH3lhTDMNL0voVYvr4hyLPsyj6oe%2BFzVJkCQujeILFR%2BMlDDeWMeeCKUeOjsLsvBGNqVUuNcffTpJJeoLm6k%2FeZaVyw%2Fkn6QozFbClw4i5aUQkOTEN1A%3D%3D", "trade_no=2019101822001402361000103419", "auth_app_id=2016091400508294", "version=1.0", "app_id=2016091400508294", "sign_type=RSA2", … ]
+
+			array[2];
+			"method=alipay.trade.page.pay.return"
+			array[1];
+			"out_trade_no=201910184795999"
+			var arr = array[1].split("=");
+			undefined
+			arr[1];
+			"201910184795999"-->
 	</body>
 
 </html>

@@ -1,7 +1,10 @@
 package cn.nchu.green_farm.service;
 
 import cn.nchu.green_farm.entity.Order;
+import cn.nchu.green_farm.service.exception.AccessDefinedException;
+import cn.nchu.green_farm.service.exception.OrderDataNotFoundException;
 import cn.nchu.green_farm.service.exception.ServiceException;
+import cn.nchu.green_farm.service.exception.UpdateException;
 import cn.nchu.green_farm.vo.OrderVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author Choococo
@@ -42,6 +46,19 @@ public class OrderSerivceTestCase {
             Integer id = 8;
             OrderVO orderVO = orderService.getById(id);
             System.err.println(orderVO);
+        } catch (ServiceException e) {
+            System.err.println("错误类型:" +  e.getClass().getName());
+            System.err.println("错误描述:" +  e.getMessage());
+        }
+    }
+
+    @Test
+    public void changeStatusPay() {
+        try {
+            Long ono = 201910187790999L;
+            Integer uid = 2;
+            orderService.changeStatusPay(ono,uid);
+            System.err.println("OK.");
         } catch (ServiceException e) {
             System.err.println("错误类型:" +  e.getClass().getName());
             System.err.println("错误描述:" +  e.getMessage());

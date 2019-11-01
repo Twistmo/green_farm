@@ -7,8 +7,7 @@ import cn.nchu.green_farm.mapper.OrderMapper;
 import cn.nchu.green_farm.service.IAddressService;
 import cn.nchu.green_farm.service.ICartService;
 import cn.nchu.green_farm.service.IOrderService;
-import cn.nchu.green_farm.service.exception.AddressNotFoundException;
-import cn.nchu.green_farm.service.exception.InsertException;
+import cn.nchu.green_farm.service.exception.*;
 import cn.nchu.green_farm.vo.CartVO;
 import cn.nchu.green_farm.vo.OrderVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author Choococo
@@ -35,7 +33,6 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     @Transactional
     public Order createOrder(Integer uid, String username,Integer addressId, Integer[] cartIds)  throws InsertException {
-
         // 创建Date对象
         Date now = new Date();
         // 声明pay变量
@@ -68,6 +65,8 @@ public class OrderServiceImpl implements IOrderService {
         Order order = new Order();
         // order属性:uid
         order.setUid(uid);
+        // 设置订单号
+        order.setOno(onoRandom());
         // order属性:pay
         order.setPay(pay);
         // 通过addressService.getById()得到收货地址的数据
@@ -115,6 +114,43 @@ public class OrderServiceImpl implements IOrderService {
         return findById(id);
     }
 
+    @Override
+    public Order getByOno(Long ono) {
+        return findByOno(ono);
+    }
+
+    @Override
+    public void changeStatusPay(Long ono, Integer uid)  throws UpdateException, OrderDataNotFoundException, AccessDefinedException {
+        //  根据订单号查询订单数据
+        Order data = findByOno(ono);
+        // 判断订单数据是否为null
+        if (data == null) {
+            // 是：抛出异常OrderDataNotFoundException
+            throw new OrderDataNotFoundException("支付失败!您尝试修改的订单号不存在!");
+        }
+        // 判断数据归属是否正常
+        if (!data.getUid().equals(uid)) {
+            // 不正常：抛出异常AccessDefinedException
+            throw new AccessDefinedException("支付失败!您您尝试支付的订单号不存在!");
+        }
+        // 执行更新
+        updateStatusPay(ono, new Date());
+    }
+
+
+    /**
+     * 生成订单前缀
+     * @return
+     */
+    private Long onoRandom() {
+        Random random = new Random();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        Date date = new Date();
+        String newDate = simpleDateFormat.format(date);
+        return Long.valueOf(Integer.valueOf(newDate)+"" +random.nextInt(10000)+999);
+
+    }
+
     /**
      * 插入订单数据
      * @param order 订单数据
@@ -147,4 +183,23 @@ public class OrderServiceImpl implements IOrderService {
         return orderMapper.findById(id);
     }
 
+    /**
+     * 根据订单号查询订单数据
+     * @param ono 订单号
+     * @return 匹配的订单数据，如果没有则返回null
+     */
+    private Order findByOno(Long ono) {
+        return orderMapper.findByOno(ono);
+    }
+
+    /**
+     * 在支付成功之后，根据订单号，将status该为1，已支付
+     * @param ono 订单号
+     */
+    private void updateStatusPay(Long ono, Date modifiedTime) {
+        Integer rows = orderMapper.updateStatusPay(ono,modifiedTime);
+        if (rows != 1) {
+            throw new UpdateException("更新数据时发生未知错误!更新数据失败!");
+        }
+    }
 }

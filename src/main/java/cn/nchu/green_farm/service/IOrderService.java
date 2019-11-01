@@ -1,7 +1,10 @@
 package cn.nchu.green_farm.service;
 
 import cn.nchu.green_farm.entity.Order;
+import cn.nchu.green_farm.service.exception.AccessDefinedException;
 import cn.nchu.green_farm.service.exception.InsertException;
+import cn.nchu.green_farm.service.exception.OrderDataNotFoundException;
+import cn.nchu.green_farm.service.exception.UpdateException;
 import cn.nchu.green_farm.vo.OrderVO;
 
 /**
@@ -28,4 +31,17 @@ public interface IOrderService {
      */
     OrderVO getById(Integer id);
 
+    /**
+     * 根据订单号查询订单数据
+     * @param ono 订单号
+     * @return 匹配的订单数据，如果没有则返回null
+     */
+    Order getByOno(Long ono);
+
+    /**
+     * 在支付成功之后，根据订单号，将status该为1，已支付
+     * @param ono 订单号
+     * @param uid 用户id，用于判断数据归属
+     */
+    void changeStatusPay(Long ono, Integer uid) throws UpdateException, OrderDataNotFoundException, AccessDefinedException;
 }

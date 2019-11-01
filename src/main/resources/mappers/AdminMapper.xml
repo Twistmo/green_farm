@@ -84,4 +84,41 @@
 		where
 			id=#{id}
 	</select>
+
+	<!--查询用户所有的信息-->
+	<!--User findByList()-->
+	<select id="findByList" resultType="cn.nchu.green_farm.entity.User">
+		select
+		 	*
+		from
+			t_user
+	</select>
+
+	<!--查询用户所有的信息-->
+	<!--Business findBusByList()-->
+	<select id="findBusByList" resultType="cn.nchu.green_farm.entity.Business">
+		select
+		 	id, business_name businessName, password,
+		salt, avatar,
+		is_delete isDelete
+		,the_status theStatus,phone,email
+		from
+			t_business
+	</select>
+
+	<!--查询用户所有的信息-->
+	<!--List<FarmProduct> findProductByList()-->
+	<select id="findProductByList" resultType="cn.nchu.green_farm.entity.FarmProduct">
+		select
+		 	 id,bid,
+            item_type AS itemType,
+            title,sell_point AS sellPoint,
+            price,num,image,status,
+            priority,
+            created_user AS createdUser,
+            created_time AS createdTime
+		from
+			t_farm_product
+	</select>
+
 </mapper>

@@ -103,6 +103,7 @@
 					<h3 class="panel-title"><span class="fa fa-shopping-cart"></span> 购物车</h3>
 				</div>
 				<div class="panel-body">
+					<!--下面表单中需要添加method，和action=跳转的页面，通过submit提交数据给下一个页面-->
 					<form role="form"  method="get" action="orderConfirm.html">
 						<!--购物车表格开始-->
 						<table class="cart-table" width="100%">
@@ -310,7 +311,7 @@
 							html = html.replace(/#{title}/g, list[i].title);
 							html = html.replace(/#{price}/g, list[i].newPrice);
 							html = html.replace(/#{count}/g, list[i].count);
-							html = html.replace(/#{total_price}/g, list[i].newPrice * list[i].count);
+							html = html.replace(/#{total_price}/g, (list[i].newPrice * list[i].count));
 
 							$("#cart-list").append(html);
 						}
